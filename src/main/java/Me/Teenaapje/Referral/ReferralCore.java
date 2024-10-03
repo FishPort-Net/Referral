@@ -2,6 +2,8 @@ package Me.Teenaapje.Referral;
 
 import java.util.List;
 
+import com.github.Anon8281.universalScheduler.UniversalScheduler;
+import com.github.Anon8281.universalScheduler.scheduling.schedulers.TaskScheduler;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -18,8 +20,18 @@ public class ReferralCore extends JavaPlugin{
 	public ReferralInvites rInvites;
 	public ReferralMilestone milestone;
 	public Database db;
-	
+	private static TaskScheduler scheduler;
+
+	public static TaskScheduler getScheduler() {
+		return scheduler;
+	}
+
+	public static JavaPlugin getPlugin() {
+		return core;
+	}
+
 	public void onEnable() {
+		scheduler = UniversalScheduler.getScheduler(this);
 		saveDefaultConfig();
 		// set the plugin
 		ReferralCore.core = this;
@@ -44,6 +56,10 @@ public class ReferralCore extends JavaPlugin{
 	
 	public void onDisable() {
 		db.CloseConnection();
+		// set placeholders if papi is there
+		if (ConfigManager.placeholderAPIEnabled) {
+			new PlaceHolders().unregister();
+		}
 	}
 	
 	
@@ -61,7 +77,7 @@ public class ReferralCore extends JavaPlugin{
 		for (int i = 0; i < commands.size(); i++) {
 			String command = (String) commands.get(i);
 
-			getServer().getScheduler().runTask(this, new Runnable() {
+			getScheduler().runTask(this, new Runnable() {
 				@Override
 				public void run() {
 					getServer().dispatchCommand(getServer().getConsoleSender(), command.replace("<player>", player.getName()));

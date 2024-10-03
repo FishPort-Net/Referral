@@ -9,7 +9,6 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabExecutor;
 import org.bukkit.entity.Player;
-import org.bukkit.scheduler.BukkitRunnable;
 
 import Me.Teenaapje.Referral.ReferralCore;
 
@@ -42,26 +41,22 @@ public class CommandManager implements CommandExecutor, TabExecutor {
 	
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
-		new BukkitRunnable() {
-			@Override
-			public void run() {
-				if (args.length >= 1) {
-					// go through all command
-					for (Iterator<CommandBase> iterator = commands.iterator(); iterator.hasNext();) {
-						CommandBase commandBase = (CommandBase) iterator.next();
-						
-						if (commandBase.command.compareToIgnoreCase(args[0]) == 0 && commandBase.CanUse(sender, true)) {
-							commandBase.onCommand(sender, cmd, label, args);
-							return;
-						}
+		ReferralCore.getScheduler().runTaskAsynchronously(()->{
+			if (args.length >= 1) {
+				// go through all command
+				for (Iterator<CommandBase> iterator = commands.iterator(); iterator.hasNext();) {
+					CommandBase commandBase = (CommandBase) iterator.next();
+
+					if (commandBase.command.compareToIgnoreCase(args[0]) == 0 && commandBase.CanUse(sender, true)) {
+						commandBase.onCommand(sender, cmd, label, args);
+						return;
 					}
 				}
-				if (mainCommand.CanUse(sender, true)) {
-					mainCommand.onCommand(sender, cmd, label, args);
-				}
 			}
-		}.runTaskAsynchronously(core);
-		
+			if (mainCommand.CanUse(sender, true)) {
+				mainCommand.onCommand(sender, cmd, label, args);
+			}
+		});
 		
 		return true;
 	}
