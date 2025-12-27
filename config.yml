@@ -1,0 +1,163 @@
+########################################################
+#
+#   数据库配置
+#
+########################################################
+
+# DB = 'local' 或 'mysql'
+db: local
+
+# 数据库登录
+host: 0.0.0.0
+port: 3306
+database: users
+username: root
+password: ""
+table: user
+databaseParameters: "?autoReconnect=true"
+
+# 这是防止滥用推荐系统的一小步
+# 0 表示同一网络不能推荐
+useSameIPLimit: true
+# 同一IP的最大数量
+maxSameIP: 3
+
+
+
+########################################################
+#
+#   玩家奖励
+#
+########################################################
+
+# 玩家必须确认推荐（或拒绝）
+usePlayerConfirm: true
+
+# 使用推荐时间限制
+# 时间限制仅影响正常奖励（不包括里程碑奖励）
+# 玩家必须在首次加入服务器时在时间限制内使用 /ref <玩家>
+useReferralTimeLimit: false
+# 时间限制（分钟）
+referralTimeLimit: 60
+
+# 使用推荐最少游戏时间
+# 时间限制影响玩家获得奖励的时间
+# 玩家需要玩一定时间才能使用 /ref
+useReferralMinPlay: true
+# 时间限制（分钟）
+referralMinPlay: 20
+
+# 玩家是否可以互相推荐
+canReferEachOther: false
+
+
+# 这些是默认奖励
+# 这是邀请另一位玩家的玩家
+playerRefers: 
+   - give <player> diamond 32
+# 这是收到玩家邀请的玩家
+playerReferd: 
+   - give <player> diamond 16
+   
+
+# 使用里程碑奖励
+# 这不受时间限制影响
+# 这些奖励是给邀请了特定数量玩家的玩家
+useMileStoneRewards: false
+# 里程碑奖励
+# 这些是一些示例，你可以添加更多或更改
+# min = 获得奖励所需的玩家数量
+# command = 要执行的命令列表
+rewards:
+   1:
+      min: 5
+      commands:
+         - give <player> diamond 64
+   2:
+      min: 10
+      commands:
+         - give <player> diamond 128
+
+
+
+
+########################################################
+#
+#   聊天配置
+#
+########################################################
+
+# 没有权限
+noPerm: "&c你没有所需的权限。"
+# 仅限玩家
+playerOnly: "&c只有玩家可以使用此命令。"
+# 参数过多
+tooManyArgs: "&c参数过多"
+# 如果玩家不在线
+notOnline: "&f%player_name% &c目前不在线"
+# 缺少玩家名称
+missingPlayer: "&c缺少玩家ID"
+# 缺少参数
+missingaArgs: "&c缺少参数"
+# 显示推荐总数
+playerTotal: "&6玩家 &f%player_name% &6罩了 &f%referral_total% &6个人了"
+# 如果玩家试图接受自己
+acceptSelf: "&c你需要接受其他人的请求"
+# 该玩家已被推荐
+alreadyRefed: "&c该玩家已经被其他人罩着了"
+# 如果该玩家没有推荐他
+didntRef: "&c该玩家没有问你罩他"
+# 确认来自玩家的推荐
+playerRef: "&6确认罩着 &f%player_name% &6吗?"
+# 玩家已从数据库中删除
+playerRemoved: "&6玩家: &f&f%player_name% &6已被删除"
+# 删除所有
+removeAll: "&6所有玩家已被删除"
+# 删除失败
+playerRemovedFailed: "&6无法删除: &f%player_name%"
+# 玩家已从数据库中重置
+playerReset: "&6玩家: &f%player_name% &6已被重置"
+# 重置所有
+resetAll: "&6所有玩家已被重置"
+# 重置失败
+playerResetFailed: "&6无法重置: &f%player_name%"
+# 如果玩家试图拒绝但没有指定名称
+rejectSomeone: "&c你需要指定玩家ID来拒绝别人的请求"
+# 如果玩家拒绝
+playerRej: "&6你拒绝了 &f%player_name% 的请求"
+# 如果玩家试图推荐自己
+referSelf: "&c你不能罩着自己!"
+# 如果玩家推荐了某人
+referring: "&6罩着: &f%player_name%"
+# 如果玩家试图推荐但已经推荐过某人
+alreadyRefedSelf: "&c你已经被罩着了"
+# 如果玩家向同一玩家发送了两次推荐请求
+alreadySendRef: "&c你已经向该玩家发送了请求"
+# 如果玩家收到了推荐
+youGotRefer: "&f%player_name% &6希望被你罩着, 你是否:"
+# 向发送者确认
+youSendRequest: "&6你已向: &f%player_name% &6发送请求"
+# 当玩家超时
+referTooLate: "&6你的请求已超出时间限制。"
+# 当玩家的游戏时间不足
+referMinPlay: "&6你没有达到所需的游戏时间。"
+# 不能再使用同一IP推荐
+maxIP: "&6因您已超过IP限制, 你不能发送请求。"
+# 玩家被拒绝时收到的通知
+playerGotRej: "&6你的请求被: &f%player_name% &6拒绝了。"
+# 玩家接受推荐时收到的通知
+playerAcceptedRef: "&6你被: &f%player_name% &6罩着了。"
+####
+# 按钮颜色不能更改
+# 接受按钮上的文字
+accept: "同意, 罩着 "
+# 拒绝按钮上的文字
+decline: "拒绝, 不罩"
+
+# 如果尝试互相推荐
+referEachOther: "&c你们不能互相罩着！"
+
+# 启用通知
+enableNotification: false
+# 仅针对第一次加入的玩家
+referNotification: "&6推荐系统有时间限制，请确保及时使用它。"

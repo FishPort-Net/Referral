@@ -1,5 +1,7 @@
 package Me.Teenaapje.Referral.Commands;
 
+import Me.Teenaapje.Referral.ReferralCore;
+import me.clip.placeholderapi.PlaceholderAPI;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -65,6 +67,23 @@ public class RefPlayer extends CommandBase {
         if (ConfigManager.useReferralTimeLimit && playTime > ConfigManager.referralTimeLimit) {
 			Utils.SendMessage(player, core.config.referTimeOut);
 			return false;
+		}
+
+		if (ReferralCore.getPlugin().getServer().getPluginManager().isPluginEnabled("PlaceholderAPI")) {
+			String playtime = PlaceholderAPI.setPlaceholders(player, "%plan_player_server_time_total_raw%");
+			int TotalPlayTime;
+			if (playtime.equals("%plan_player_server_time_total_raw%")) {
+				ReferralCore.getPlugin().getLogger().warning("Plan is not enabled, please enable it for the plugin to work correctly.");
+				return false;
+			}
+			TotalPlayTime = Integer.parseInt(playtime);
+			if (ReferralCore.getPlugin().getConfig().getInt("referralRegTimeLimit") <= TotalPlayTime) {
+				Utils.SendMessage(player, core.config.referTimeOut);
+				return false;
+			}
+
+		} else {
+			ReferralCore.getPlugin().getLogger().warning("PlaceholderAPI is not enabled, please enable it for the plugin to work correctly.");
 		}
  		
         // Check if server uses time limit if so did the player play enough

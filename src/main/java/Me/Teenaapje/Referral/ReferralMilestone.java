@@ -9,7 +9,7 @@ public class ReferralMilestone {
 	public List<Reward> rewards;
 
 	public ReferralMilestone() {
-		rewards = new ArrayList<Reward>();
+		rewards = new ArrayList<>();
 		LoadRewards();
 	}
 	
@@ -29,7 +29,7 @@ public class ReferralMilestone {
 		for (Reward reward : rewards) {
 			if (reward.min == referd && lastReward < referd) {
 				return true;
-			} else if (reward.min == referd && lastReward >= referd) {
+			} else if (reward.min == referd) {
 				return false;
 			}
 		}		

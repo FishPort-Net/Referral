@@ -39,6 +39,8 @@ usePlayerConfirm: true
 useReferralTimeLimit: false
 # Time limit in minutes
 referralTimeLimit: 60
+# 1 day = 86400000ms
+referralRegTimeLimit: 86400000
 
 # Use a Referral min play
 # The time limit effect when the player can be rewarded
